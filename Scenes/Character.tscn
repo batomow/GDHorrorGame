@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dupgqob73q61i"]
+[gd_scene load_steps=12 format=3 uid="uid://dupgqob73q61i"]
 
 [ext_resource type="Script" path="res://Scripts/Character.gd" id="1_yfhfb"]
+[ext_resource type="PackedScene" uid="uid://bmdg6kxyerxi3" path="res://Scenes/LightDetect.tscn" id="2_3iaw5"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rl3ct"]
 
@@ -72,7 +73,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("OmniLight3D:position:x")
+tracks/5/path = NodePath("Lantern:position:x")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -83,7 +84,7 @@ tracks/5/keys = {
 tracks/6/type = "bezier"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("OmniLight3D:position:y")
+tracks/6/path = NodePath("Lantern:position:y")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -94,7 +95,7 @@ tracks/6/keys = {
 tracks/7/type = "bezier"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("OmniLight3D:position:z")
+tracks/7/path = NodePath("Lantern:position:z")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -105,7 +106,7 @@ tracks/7/keys = {
 tracks/8/type = "bezier"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("OmniLight3D:light_energy")
+tracks/8/path = NodePath("Lantern:light_energy")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -179,7 +180,7 @@ resource_name = "flashlight_hide"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OmniLight3D:position:x")
+tracks/0/path = NodePath("Lantern:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -190,7 +191,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OmniLight3D:position:y")
+tracks/1/path = NodePath("Lantern:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -201,7 +202,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OmniLight3D:position:z")
+tracks/2/path = NodePath("Lantern:position:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -212,7 +213,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("OmniLight3D:light_energy")
+tracks/3/path = NodePath("Lantern:light_energy")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -226,7 +227,7 @@ resource_name = "flashlight_show"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/path = NodePath("Lantern:light_energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -237,7 +238,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OmniLight3D:position:x")
+tracks/1/path = NodePath("Lantern:position:x")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -248,7 +249,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OmniLight3D:position:y")
+tracks/2/path = NodePath("Lantern:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -259,7 +260,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("OmniLight3D:position:z")
+tracks/3/path = NodePath("Lantern:position:z")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -337,11 +338,12 @@ _data = {
 "uncrouch": SubResource("Animation_vje57")
 }
 
-[node name="Node3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_yfhfb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.985168, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_rl3ct")
 
 [node name="CrouchedCollisionShape" type="CollisionShape3D" parent="."]
@@ -360,6 +362,10 @@ libraries = {
 "": SubResource("AnimationLibrary_wfhpe")
 }
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="Lantern" type="OmniLight3D" parent="."]
 transform = Transform3D(0.99989, -0.0148173, 0, 0.0148173, 0.99989, 0, 0, 0, 1, 0.835624, 1.1853, -0.60964)
 light_energy = 0.0
+
+[node name="LightDetect" parent="." instance=ExtResource("2_3iaw5")]
+
+[node name="Footsteps" type="AudioStreamPlayer" parent="."]

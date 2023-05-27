@@ -7,24 +7,22 @@ enum States {
 	waiting
 }
 
-@export var waypoints: Array
 @export var chase_speed := 3.0
 @export var patrol_speed := 2.0
 
+@onready var waypoints: Array = get_tree().get_nodes_in_group("Enemy Waypoint")
 @onready var navigation_agent :NavigationAgent3D = $NavigationAgent3D
 @onready var patrol_timer: Timer = $PatrolTimer
-var current_state:States
+@onready var player:CharacterBody3D = get_tree().get_nodes_in_group("Player")[0]
+@onready var current_state:States = States.patrol
+
 var waypoint_index: int
 var player_in_earshot_far := false
 var player_in_earshot_close := false
 var player_in_sight_far := false
 var player_in_sight_close := false
-var player 
 
 func _ready(): 
-	current_state = States.patrol
-	waypoints = get_tree().get_nodes_in_group("Enemy Waypoint")
-	player = get_tree().get_nodes_in_group("Player")[0]
 	(navigation_agent as NavigationAgent3D).target_position = (waypoints[0].global_position)
 
 func _process(delta): 
@@ -66,21 +64,24 @@ func check_for_player():
 		if result["collider"].is_in_group("Player"):
 			
 			if player_in_earshot_close:
-				if result["collider"].crouched == false: 
+				if player.crouched == false: 
 					current_state = States.chasing
 					
 			if player_in_earshot_far:
-				if result["collider"].crouched == false: 
+				if player.crouched == false: 
 					current_state = States.hunting
 					
 			if player_in_sight_close:
+				if player.light_level > 0.3:
 					current_state = States.chasing
 					
 			if player_in_sight_far:
-				if result["collider"].crouched == false: 
+				if player.crouched == false and player.light_level > .6: 
 					current_state = States.hunting
 					navigation_agent.target_position = player.global_position
-
+				if player.crouched == true and player.light_level > .7: 
+					current_state = States.hunting
+					navigation_agent.target_position = player.global_position
 
 func face_direction(direction:Vector3): 
 	look_at(Vector3(direction.x, global_position.y, direction.z), Vector3.UP)

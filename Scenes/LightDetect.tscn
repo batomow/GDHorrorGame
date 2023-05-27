@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmdg6kxyerxi3"]
+
+[ext_resource type="Script" path="res://Scripts/LightDetect.gd" id="1_xwl84"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_6a0wq"]
+radial_segments = 12
+rings = 3
+
+[node name="LightDetect" type="Node3D"]
+script = ExtResource("1_xwl84")
+metadata/_edit_horizontal_guides_ = [16.0]
+metadata/_edit_vertical_guides_ = [16.0]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("SphereMesh_6a0wq")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 16.0
+offset_bottom = 16.0
+scale = Vector2(4, 4)
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(16, 16)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.69012, 0)
+projection = 1
+size = 0.306691
